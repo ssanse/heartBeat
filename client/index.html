@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<style>
+		body, html {
+		  height: 100%;
+		  font: 400 15px/1.5 "Lato", sans-serif;
+		  color: #FFFFFF;
+		  text-transform: uppercase;
+		}
+		.bg { 
+			/* The image used */
+			background-image: url("heart.jpg");
+
+			/* Full height */
+			height: 100%; 
+
+			/* Center and scale the image nicely */
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		.button {
+    background-color: #FFFFFF;
+    border: none;
+    color: #64AEAE;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+	font-weight:bold;
+}
+	</style>
+    <title>Heart Beat Sensor</title>
+  </head>
+  <body class="bg">
+  <h1>Heart Beat Sensor !!!!!!</h1>
+  <span>
+	<span id="heart">Please press refresh button to see your Heart Beat</span><span id="beat"></span><BR>
+  </span>
+  <br/>
+	<INPUT type="button" onclick="childFunction()" value="Refresh" class="button">
+   <script>
+	function childFunction(){
+		var url = "/api/heartBeats/findOne";
+		var xhtttp = new XMLHttpRequest();
+		xhtttp.open("GET",url, false);
+		xhtttp.setRequestHeader("Content-type", "application/json");
+		xhtttp.send();
+		var response1 = JSON.parse(xhtttp.responseText);
+		if(!("beatCount" in response1)==0){
+			document.getElementById("heart").innerHTML = "Your Heart Beat Count is ";
+			document.getElementById("beat").innerHTML = response1.beatCount;
+		}else{
+			document.getElementById("heart").innerHTML = "No heart Beat found";
+			document.getElementById("beat").innerHTML = "";
+		}
+	};
+	</script>
+  </body>
+</html>
